@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+	<title>impish gull</title>
+	<link rel="icon" href="{{ url_for('static', filename='img/logo.ico') }}"/>  
+	<link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.ico') }} type="image/x-icon" />
+			
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>			
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>														  
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>												  
+																																				
+</head>
+
+<body>
+	<div class="background-wrap">
+		<video id="video-bg-elem" preload="auto" autoplay loop muted> 
+			<source src= {{ url_for('static', filename= "wall-street-video.mp4")}} type="video/mp4">
+
+			Video not supported
+		</video>          
+	</div>
+	
+	<div class="cont"></div>
+  
+	<div id="mySidenav" class="sidenav">
+			<a href="{{ url_for('home') }}"><center><img border="0" src="{{ url_for('static', filename='img/logo.png') }}" alt="Home" width="90" height="60"  /></center></a>
+		  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		  <a href="{{ url_for('home') }}"><center>Home</center></a>
+		  <a href="{{ url_for('about') }}"><center>About</center></a>
+		  <a href="{{ url_for('scoring') }}"><center>Scoring</center></a>
+		
+											
+
+		</div>
+
+
+		<span style="font-size:50px;color:white;cursor:pointer" onclick="openNav()">&#9776; </span>
+	
+	
+	<script>
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "200px";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+		}
+
+
+	</script>
+	
+
+  </div>
+
+  <div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+  </div>
+
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+</body>
+</html>

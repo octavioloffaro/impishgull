@@ -1,0 +1,692 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1><center><img border=0 src="{{ url_for('static', filename='img/logo.png') }}" alt="name" width="200" /></center></h1>
+<br><br>
+<br><br>
+    <center><h1>About impish gull</h1></center>
+<br><br>
+	<p2 > 
+	
+Abstract<br>
+<br>
+In the following report the development of impish gull, a web-based financial element analyser, will be presented and explained.<br>
+Firstly, an analysis of motivations and problematics driving the research and development of this app will be explained in detail.<br>
+later the implementation of the software will be thoroughly explained and analysed, going through issues, exemptions, and conditions for the development of the software, these will include:<br>
+Price prediction tool with Lstm<br>
+The scoring tool which includes several analyses about intrinsic and technical information of the data analysed (stock prices).<br>
+Later, evaluations and tests of the above-mentioned implementations will be explained and justified, generating, as well, interpretations from graphical implementation. <br>
+Finally, future work and conclusions of the whole project will be presented.<br>
+<br>
+
+Introduction<br>
+<br>
+&ldquo;-20-Year-Old Robinhood Customer Dies By Suicide After Seeing A $730,000 Negative Balance-&rdquo;<br>
+<br>
+Financial literacy is a privilege in today&rsquo;s world, with most primary and secondary education not addressing this issue, several inexperienced individuals fall into the trap of &ldquo;trying without knowing&rdquo;, thing that can become deadly, like it happened to a young student in the US. This issue accentuates by the fact that more and more companies are offering simpler and &ldquo;user-friendly&rdquo; approach to trading such as colourful apps with little to no signup requirements. But the main issue that these platforms fail to address is the background knowledge necessary for these kinds of transactions, RISK is the main element diluted by these companies, seeing colourful interfaces with minimalistic approaches and 4.4 stars on the Appstore makes everyone to think it&rsquo;s something not to be taken seriously.<br>
+To prove the lack of authentication security that these systems hold I try it myself with one of the leading &ldquo;mainstream&rdquo; providers of financial services from the google play store: Trading 212. In this occasion after soma basic forms requesting names and addresses and after authenticating my passport as +18, I was asked a few questions which can be easily &ldquo;googled&rdquo; and solved. Following this, I got access to my account. Of course, I lied in some questions like how many years of trading I have, but since this is a requirement and a non-authenticated one, I do not know any case in which someone would press the &ldquo;no previous experience&rdquo; button.<br>
+<br>
+Added to the lack of education comes the boom in social media and general coverage of finance that comes attached with generation of conceptual success and inflated stories like what has been happening with digital and, electrical industries such as tesla in which case the valuation of the company based on the price of the stock highly outweighs the reality of the profitability and economic performance of the company. These bubbles come accompanied by inexperienced people pouring money into companies that &ldquo;are not really worth what they are worth&rdquo;, and which are subject to extreme volatility and fast tailed distribution of price.<br>
+Something similar is happening with cryptocurrency, which despite the fact of having an intrinsic value of &ldquo;0&rdquo; its price has risen past the tenths of thousands of dollars based on the perception and trend of the big social media crows. Again, this is subject to high volatility and, as it has happened in the past, could make investors suffer from huge losses in terms of minutes.<br>
+<br>
+All these problematics, mixed with my interest in finance, gave me the incentive to develop &ldquo;impish gull&rdquo; a simplistic system that aims to help inexperienced users to make more informative and selective decision about the stocks they might be interested in.<br>
+ <br>
+<br>
+Background<br>
+<br>
+Impish gull intends to address all the problematics above presented, it is intended to be an educational and useful tool that amateur investors have the chance to use.<br>
+<br>
+Other similar systems:<br>
+<br>
+There are many and various financial analysers and predicting systems in the market. Including one of the most known ones &ldquo;CNN stock predictor&rdquo;, regardless of this, the difference that has been intended to generate with these systems lays in the following:<br>
+<br>
+&bull; Most of the options already available are paid, their fees round an average of USD 130 a month, a steep sum which not many users would be able to afford and justify based on the returns of the potential investments (which is equivalent to the potential investment size).<br>
+<br>
+&bull; Impish gull intends to use financial statements from companies in order to make a quantitative assessment of the company, this, according to my personal research, is not something that other current financial analysers implement, but relay more on computational past prices analysis and subjective views from economists.<br>
+<br>
+&bull; Impish gull is extremely easy to use and appeals to a minimalistic interface, (element not prioritized by other providers as their user aim is of higher expertise).<br>
+<br>
+User:<br>
+<br>
+The intended users of this system are inexperienced individuals wishing to invest in the stock market with little to no experience/ time for deeper individual stock analysis.<br>
+<br>
+Approach<br>
+<br>
+To locally run impish gull<br>
+<br>
+In order to run impish gull locally the following steps should be followed:<br>
+<br>
+Open command line<br>
+Go to the location in which the software is installed.<br>
+Insert: cd impishgull<br>
+insert: python -m venv venv<br>
+insert: venv\Scripts\activate<br>
+insert: set FLASK_DEBUG=&quot;1&quot;<br>
+insert: set FLASK_APP=__init__<br>
+insert: flask run-<br>
+open a browser and go to address: http://127.0.0.1:5000/home<br>
+<br>
+Changes from initial plan<br>
+<br>
+Process of Selection of API <br>
+<br>
+The selection of the API which was going to be used for sourcing of financial data was extensive, after several visited forums, companies&rsquo; websites, and newspapers I arrived at a selection of 3 providers, Alpha vantage, IEXCloud, and Polygon.io.<br>
+<br>
+Alpha vantage:<br>
+<br>
+&bull; Free for 5 requests per minute &amp; 500 requests per day<br>
+&bull; Stablished and highly regarded platform (shows future prospective)<br>
+&bull; Access to stock, ETFs, mutual funds, and forex (FX) and derived data such as technical indicators.<br>
+&bull; Integration with python.<br>
+<br>
+IEXCloud:<br>
+<br>
+&bull; Paid option.<br>
+&bull; Highly established company with good perspectives and used by relevant and big companies such as JP Morgan and Coinbase.<br>
+&bull; Big database of financial elements with a timeframe of milliseconds including stock data, news, forex, options, commodities, economic data, and other alpha-generating datasets.<br>
+&bull; Simplistic Integration with python with plenty of sources online.<br>
+<br>
+Polygon.io:<br>
+<br>
+&bull; Free but Paid option is required for more complex things access takes days.<br>
+&bull; Really well-established company, being used by companies such as Google and Robinhood.<br>
+&bull; Best, fastest, and most accurate database of information database due to the location of data which is shared with major New York based exchange centres (NASDAQ and NYSE).<br>
+&bull; Integration with python.<br>
+<br>
+In consideration of the information presented above and in search of a complete tool that can be accessed for free I decided to use alpha vantage as the provider of my data.<br>
+<br>
+Request of key<br>
+<br>
+To gain access to the API, a free key needs to be requested at alpha vantage website, this requires 3 pieces of information including profession, institution, and email. This free key allows the developer to request data to the app up to 5 times per minute and 500 requests per day. In my case, this limitation of requests wasn&rsquo;t enough for my purpose and the efficient development of the software, hence I contacted alpha vantage education department and I was assigned an unlimited educational key. In the case impish gull was to be released without an educational purpose or background, then a premium key would need to be purchased to satisfy the potential demand requirements.<br>
+<br>
+Issues with API dates<br>
+<br>
+One of the issues present during the development of impish gull was the lack of documentation in respect to the specification of dates in which the data would be required. For this reason, I was forced to use 3rd party sources which did not explain in much detail this issue, it was more of a try and error situation. This issue was highlighted by the fact that some methods did not work for certain requests, but they did for others.<br>
+<br>
+Extra data: On the Alpha vantage website there is some information regarding the potential future change of the formatting of requests to Alpha Vantage API, supposedly this change will not be big; regardless of this, impish gull will need to potentially change the formatting of its date requests in the future.<br>
+<br>
+Format, Format, and Format<br>
+<br>
+Changes in format of data sourced from the implemented API was personally one of the most time-consuming activities of this project. This resulted from complicated and not well-documented procedures for data extraction, and varied outputs based on different &ldquo;requests methods&rdquo; depending on the function used. For example, for extraction of technical indicators list indexing was used, this procedure became obsolete as it was not supported for the balance sheet section, hence requiring the use of dictionaries in order to obtain the specific piece of data required.<br>
+<br>
+Python<br>
+Python was selected for the development of this project for the following reasons:<br>
+<br>
+Provides good availability of machine learning libraries and resources.<br>
+Provides high compatibility with all the analysed APIS utilized.<br>
+Personally, have long term experience programming and developing in python.<br>
+Accessible use of flask framework for front end web display of results.<br>
+<br>
+Flask<br>
+<br>
+For the connectivity of information between the front and back-end sections of impish gull website flask was used and implemented.<br>
+<br>
+Why Flask?<br>
+<br>
+Flask was selected mainly from a personal inclination, as experience in different and varied projects made me more comfortable with this framework than any other one. In this way, time would be saved, and a higher aim of final product could be achieved.<br>
+<br>
+Search<br>
+<br>
+The search bar displayed on the interface was graphically developed with CSS and HTML, and the back-end procedure was achieved with the use of a POST method which allowed the search button to send the information on the textbox to the back end (routes.py), from this the python file will process the information in the textbox and render a new page with the results.<br>
+<br>
+Interface and use<br>
+<br>
+Following the selection of the API, a website was developed using HTML, CSS and JavaScript, the website is simplistic and minimalistic, in this way is intended to be relatively straightforward for any user to use and learn the tools available.<br>
+<br>
+ <br>
+<br>
+&bull; At the top left corner, a side navigation icon is present.<br>
+&bull; Upon pressing of this a menu with 3 options is displayed: home, scoring, and about.<br>
+<br>
+ <br>
+<br>
+&bull; Home button is intended to bring the user back from any website to the main page, alternatively, this can be achieved upon pressing of the &lsquo;impish gull&rsquo; logo on top.<br>
+&bull; About button will redirect the user to a page in which explanation of the background behind impish gull is presented, in this way the user can understand the technologies being used and how to interpret the values provided by the app.<br>
+&bull; Scoring button gives a detailed view of how the score should be read and interpreted.<br>
+Add about screenshot<br>
+&bull; On the home, a search bar with a placeholder saying: &ldquo;Search stock ticker&rdquo; will be present. If the user inserts a stock ticker the app will redirect the user to a page displaying the following:<br>
+<br>
+ <br>
+<br>
+o Current price of the stock: indicating the current price of that specific stock at the moment, alternatively if the user searches when the market is closed (after hours or weekends) the app will display the last recorded price at close.<br>
+o Predicted price for next opening: This value indicates the predicted value for the stock on the next opening of the market. This is explained in more detail in the section &ldquo;LSTM&rdquo;.<br>
+o A Stock super indicator score: Although simplistic and generic, this score is the most complete and full element of the software as it quantifies several graphical technical indicators and financial statements, which, unless the user has wide knowledge in finance, would be really complex and extremely time-consuming to understand. With the stock score, the user can check instantly if the base of the technical part of the company is in order, and how much in order (quantitative).<br>
+More about this technical section will be mentioned in the section &ldquo;SCORE&rdquo;.<br>
+o The background colour of the first 2 squares (last closing price and price expected for next close) is dependent on the relationship with each other. If one is higher than the other, then it will be coloured green and the other one (with lower price) will be coloured red; this allows for a fast and efficient browse of potential increasing or decreasing prices in the near future.<br>
+&bull; In the case the ticker inserted is incorrect the user will be redirected to a page indicating that the input inserted is invalid <br>
+ <br>
+<br>
+&bull; In case the user intends to go to a not declared address a premade 404 error page will be displayed <br>
+<br>
+ <br>
+<br>
+<br>
+Research of machine learning methods<br>
+<br>
+For the development of the predictive section of impish gull, I embarked myself in learning route which included weighting different potential implementations in terms of how much they would fit my objectives and how achievable this were. Considering that I have never been exposed to machine learning (basic requirement for this objective) it was complicated especially the part of not knowing any of the technologies used, perhaps for this section of impish gull personal overlearning of concepts and methods was necessary to fully understand what I wanted to achieve and later see in which ways that could be done.<br>
+<br>
+After several days of internet research and paper-reading I arrived at the following methods: <br>
+<br>
+RNN:<br>
+<br>
+Rnn or recurrent neural network Is a neural network that learns sequential information in order to predict potential future changes on the information fed. Rnn is greatly fast and efficient, but outdated. Based on personal research done, this method has been replaced almost entirely for more modern and efficient networks. One of the main issues of rnn and the main reason of why it wasn&rsquo;t used for impish gull is gradient loss of short-term memory, this refers to the fact that the network loses memory over past information the more information is fed, this explanation can be seen in the following graph:<br>
+<br>
+<br>
+In this case, we can see how the initial fed colours get reduced the more information is inserted into the network. Eventually, consideration of this initial data is eliminated; if this happens rnn would not consider old data as much as new data for prediction results. In the case of impish gull, this would represent a reduction in the relevance of past price changes over new changes differences.<br>
+<br>
+LSTM<br>
+<br>
+LSTM refers to long short-term memory, this is probably explained in the name. lstm addresses the issue that rnn has, in this way it is able to use past data in an efficient way that doesn&rsquo;t compromise its relevance in the network, Lstm works by the use of 2 inputs an input coming from the past information and an input coming from the current one, this is then scaled and utilized to be sent to the next step.<br>
+<br>
+The implementation of Lstm for impish gull was done utilizing the Lstm tensorflow keras layer, a python library, and Scaling of values was implemented.<br>
+<br>
+Transformers<br>
+<br>
+Transformers are one of the most modern neural network methods for prediction, in the financial market several papers regard transformer to be of more precision and accuracy of results than any of the other methods mentioned before.<br>
+Despite of this, transformers was not implemented in impish gull due to a timing issue, at the time transformers was found to be a possible solution for the prediction method, a considerable amount of time was spent in Lstm, and there would have not been enough time for further implementation before this project&rsquo;s deadline.<br>
+Another reason of why this method was not implemented is because I did not find enough parallel implementations available to be of any base of learning for a financial analyser model, this might be due to the short time spent in consideration of transformers.<br>
+<br>
+Regardless of this, it would be a good future implementation to develop the prediction section with transformers and see the difference of performance and a curacy with the already implemented Lstm. Perhaps a combination of both methods could be used to achieve an even better result than the one obtained individually by each of them.<br>
+<br>
+Implementation<br>
+<br>
+<br>
+LSTM<br>
+<br>
+For the implementation of this, the predictive section of this program LSTM was utilized, this network was used in order to predict the next day closing price of a specific stock after looking at a certain number of days in the past, Lstm allows to use the past prices in order to shape a probable future value of price.<br>
+<br>
+Scaling:<br>
+The Scaling in the inputs of Lstm is necessary to avoid extremely high or low numbers between the predicted data, in this way all the data can be compared accurately, and fairly. For this the data is fitted between 0 and 1. After this the values are stored in a NumPy array to be processed.<br>
+<br>
+The following considerations were made for the management of data:<br>
+<br>
+&bull; For efficiency in most testing and potential demonstration of software, the number of &ldquo;epochs&rdquo; (number of times the model will see the data) was set to one, regardless of this, the number selected for this was an average of 24, bigger numbers could be set but time would increase highly making the operability of the software inefficient.<br>
+<br>
+&bull; The number of days that the model looks into to make a prediction is of 60 days (2 months), again, bigger numbers could be used, but this would make the model really slow, energy-consuming and potentially overfit the purpose (generating less accurate or out of the average assumptions). The values corresponding to each of these days is scaled and stored.<br>
+<br>
+Score<br>
+<br>
+How does score work<br>
+<br>
+The stock score works by quantifying over 13 points from the company searched, these points cover the following topics and areas of a company:<br>
+Momentum of price, operative income, net income, operation margin, revenue, total shareholder equity, current assets and current liabilities (please refer to the final glossary for specific definitions of these), these selections of elements was concluded after research about indications of healthy financial condition of a company or potential future growth.<br>
+Ultimately the score gives a specific number that intends to quantify the health of the finances of the company in consideration.<br>
+Variation on contributions to the final score varies depending on the point in consideration following the following chart:<br>
+<br>
+ <br>
+Here, it can be noted that values obtained from the balance sheet and income statement have more relative weight, since these reflect the real and indisputable condition of the finances of the company. On the other hand, the technical indicators have less weight because these are highly volatile elements, in addition, their accuracy is not always precise and the way they are read can vary widely. Other hierarchical considerations are the following:<br>
+<br>
+&bull; Balance sheet is more relevant than income statement since it represents more long term and stability-indicating factors.<br>
+<br>
+&bull; MACD is more relevant than rsi since the amount of positive and negative incidence triggers on macd are much rarer than RSI.<br>
+<br>
+Different technical indicators<br>
+<br>
+Selection of technical indicators<br>
+<br>
+The selection of technical indicators was made following higher usage registered by the alpha vantage API, despite of this more indicators were intended to be implemented to get a more general and telling result but the time given for this project did not allow for this addition, in the future more technical indicators could be added into the software.<br>
+<br>
+RSI<br>
+<br>
+Rsi or Relative Strength Index is a momentum indicator that measures the relevance of prices changes in a stock price in order to indicate if the asset is overbought or oversold.<br>
+<br>
+The interpretation of rsi is performed through the values of 70 and 30, 70 or higher represents an overbought asset, 30 or lower the opposite, these numbers are of course mathematically progressive, but despite of this, these are emotional and computational triggers, for this reason on impish gull the weight of rsi values is affected highly by these 2 numbers.<br>
+<br>
+In the following graph, it can be appreciated <br>
+<br>
+<br>
+<br>
+Implementation on score<br>
+<br>
+The implementation on the programs consists of a trigger that considers the following:<br>
+<br>
+ if rsi>70:<br>
+ score=score+7<br>
+ elif rsi<30:<br>
+ score=score-7<br>
+ elif 50<rsi<70:<br>
+ score=score+5<br>
+ elif 30<rsi<=50:<br>
+ score=score-3 <br>
+<br>
+<br>
+MACD<br>
+<br>
+MACD (Moving Average Convergence Divergence) is a trend following indicator that indicates the momentum of a given stock, in this way we can deduct the tendency of movement of a price and if the strength of increase and decrease of price is accentuated or reduced.<br>
+<br>
+The interpretation of this technical indicator is done by observing the signal line and the macd line, if both lines converge or have a converging tendency this could be a signal of price change. In the case the macd line crosses the signal line in an uptrend tendency then this can be taken as a signal of potential increase in price, and if it crosses the signal line in a descending tendency then the price has lost momentum and can be interpreted as a future lower price.<br>
+If both lines approach each other in a manner following the above reference, then it can also be assumed that the price might increase or decrease.<br>
+<br>
+<br>
+<br>
+ <br>
+<br>
+<br>
+Implementation<br>
+<br>
+The implementation of macd in the score follows the following conditional statements having in consideration:<br>
+<br>
+L1= MACD LINE.<br>
+L2= SIGNAL LINE.<br>
+L1-1=MACD LINE OF ONE MONTH IN THE PAST.<br>
+L2-1=SIGNAL LINE OF ONE MONTH IN THE PAST<br>
+L1/L2= Either L1 or L2<br>
+(L1/L2)-1=Either L1-1 or L2-1<br>
+<br>
+(The following graphical representations of conditional statements are used for easier interpretation)<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+ (L1-1)-(L2-1)=L1-L2<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+ <br>
+ (L1-1)>(L2-1) &amp; L2>L1 <br>
+ <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+L1>L2 &amp; (L1-1)-(L2-1)>L1-L2<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+L1<L2 &amp; (L1-1)-(L2-1)<L1-L2<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+ <br>
+<br>
+<br>
+ (L2-1)>(L1-1) &amp; L1>L2<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+ L2>L1 &amp; (L2-1)-(L1-1)>L2-L1<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+ L2<L1 &amp; (L2-1)-(L1-1)<L2-L1<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+Specific scoring of the above represented conditional statements can be seen in the following piece of code:<br>
+<br>
+ if (macd1-signalline1)==(macd-signalline):<br>
+ score=score<br>
+ elif (macd > signalline):<br>
+ if(macd1-signalline1)>(macd-signalline):<br>
+ score=score-9<br>
+ if(macd1-signalline1)<(macd-signalline):<br>
+ score=score+9<br>
+ if macd1<signalline1:<br>
+ score= score+10<br>
+ elif (macd<signalline):<br>
+ if (signalline1-macd1)<(signalline-macd):<br>
+ score=score+9<br>
+ if (signalline1-macd1)>(signalline-macd):<br>
+ score=score-9<br>
+ if macd1>signalline1:<br>
+ score= score-10<br>
+<br>
+Financial Statements<br>
+<br>
+In contrast to technical indicators, financial statements are not graph-based, these are several numbers and documents released by the company to the public in which information about all the insides of the finances of the company are described and quantified. For the purpose of this software 2 of the main financial statements were used: balance sheet and income statement, both will be explained in detail in the following paragraphs. Please note another relevant and important source of information document is normally used by investors (cash flow) but for time reasons it was decided to be skipped; this could be a good addition for future versions.<br>
+<br>
+Balance Sheet<br>
+<br>
+Balance sheet is a financial statement that reports a company assets and liabilities at any specific pointy in time, several sub elements can be deducted from it.<br>
+<br>
+Implementation in score<br>
+<br>
+3 points of consideration are made in the contribution of the balance sheet to the score, these points are the following:<br>
+<br>
+Total shareholder equity: this represents &#8230;&#8230;..<br>
+<br>
+if the total shareholder equity perceived by the company for the year is positive this will incur an increase in score, on the other hand, if the company&rsquo;s equity is negative the score will lower.<br>
+<br>
+If the total shareholder equity of the year before (year-1) is lower than the total shareholder equity of the current year, which would ultimately represent an increase in the amount of money entering in the business, this would incur an increased score and vice versa in the case the total shareholder equity is higher<br>
+<br>
+In the case that the ratio between the current assets and the total current liabilities is higher than 1 ( TCA/TCL>1) the score would increase, and vice versa if its smaller than 1. This would help the score to interpret if the company is currently having more assets than liabilities.<br>
+<br>
+Specific scoring can be seen in the following piece of code:<br>
+<br>
+<br>
+ if ShareholderEquity>0.0:<br>
+ score=score+11<br>
+ else:<br>
+ score-30<br>
+ if ShareholderEquity1<ShareholderEquity:<br>
+ score=score+11<br>
+ else:<br>
+ score=score-20<br>
+ if (totalcassets/totalcliabilities)<1.0:<br>
+ score=score-26<br>
+ elif (totalcassets/totalcliabilities)>1.0:<br>
+ score=score+12<br>
+ elif (totalcassets/totalcliabilities)>2.0:<br>
+ score=score+22<br>
+ elif (totalcassets/totalcliabilities)>3.0:<br>
+ score=score+32<br>
+ elif (totalcassets/totalcliabilities)>4.0:<br>
+ score=score+36<br>
+<br>
+<br>
+<br>
+Income Statement<br>
+<br>
+Income statement is a financial statement that reports a company financial performance over a specific period.<br>
+<br>
+4 points of consideration are used to shape the score:<br>
+<br>
+&bull; if operation margin, which is the result of the division of operating income over the revenue (OI/R), is bigger than 15% the score would rise as this is an average drawn from how well a business has performed. In the case it's lower than 15% then the score would get smaller.<br>
+<br>
+&bull; If the operative income is positive, then this will incur an increase of score since this shows that the business and its operations are obtaining more income than perceiving lost.<br>
+<br>
+&bull; If the net income is positive, demonstrating that the company is making money instead of losing it then the score would increase and vice versa.<br>
+<br>
+&bull; In case the revenue increases but the operation income decreases the score would be reduced, this is due to the fact that despite of the company growing, the income associated with operations (work) are decreasing, showing in this way a less efficient business despite of the increase of money entering the company.<br>
+<br>
+Specific scoring can be seen in the following piece of code:<br>
+<br>
+ if 15<((operatingincome/totalrevenue)*100)<=20:<br>
+ score=score+5<br>
+ elif ((operatingincome/totalrevenue)*100)>20:<br>
+ score=score+7<br>
+ if operatingincome>0:<br>
+ score=score+9<br>
+ else:<br>
+ score=score-15<br>
+<br>
+Security and Privacy<br>
+<br>
+Not extensive measurements of security and privacy were implemented since impish gull does not manage or store any private information of the user. Security measurements could be implemented in order to make the website secure when hosted and released; for this, the protocol HTTP could be changed to HTTPS for higher security and trust from users. Also, back-end code is inaccessible to the user to avoid copying of code and use of API keys.<br>
+<br>
+<br>
+Results and Evaluation<br>
+<br>
+Testing<br>
+<br>
+The testing of the prototype was done in several ways addressing the different functionalities in the software, the 2 main sections are score and LSTM.<br>
+<br>
+Score:<br>
+<br>
+The score was testing using a comparative assessment between the score of a ticker at a specific point in time and the percentual change in price with another time in the future, for this analysis a python program was developed which used a sample of tickers and obtained their scores while at the same time obtaining the percentual difference between when those scores were obtained and 2 years after, this time frame was selected due to the fact that alpha vantage API only allowed to retrieve information from 2016. In the future, with access to more years of data from other sources, it could be possible to make a more comprehensive and complete test. <br>
+<br>
+The score between the years 2016 to 2019 since after this, the financial markets were heavily affected by the covid-19 pandemic which made fundamental data about companies and stocks to be useless as most of the market prices fell, giving advantage to companies which were less affected by the intrinsic social closure of the pandemic, or that offered a product or service that increased in demand during this time. It would be interesting and revealing to see what the results from 2020 to the end of the pandemic show, perhaps specific fundamental information of companies could reflect potential future recovers. <br>
+<br>
+All the information of these comparisons was then stored in a .csv file which was subsequently graphed for easier comprehension.<br>
+<br>
+Data used<br>
+<br>
+For the testing, companies belonging to the s&amp;p 500 were used, this selection was made since companies belonging to this group have high volume of stocks and their capital is big enough to prevent from high volatility, so in this way, small companies that skyrocket in price overnight don&rsquo;t affect the study.<br>
+<br>
+Limitations:<br>
+<br>
+There were several limitations on this testing, the main one being the fact that not all tickers had the requested information ( assumption that was made before) since the database seems to have some holes in terms of information, this could be an issue of bad management of data from alpha vantage or just potential lack of information released initially from the company, in the case tickers were found to be lacking information the score wasn&rsquo;t calculated and they dint take part of the t4st as this would affect the fair and accurate scoring highly having, for example, really economically healthy companies having really low scores or vice versa. <br>
+The probability of lack of information between these companies was of 8.21% (according to testing) on average, which is a small number but is not when considering the Bayesian inference of data, since these companies elected are one of the biggest in the world one can only assume that smaller companies might have more gaps. Of course, this is just an assumption since making a full study of all the available public companies would take a really long time, this is due to the time it takes to process each stock (on average), the time provided for this project, and the computational availability of my personal computer device.<br>
+<br>
+Results:<br>
+<br>
+Testing was one of the main drivers towards the shaping of values and considerations towards the operation of impish gull, the main aim of the test was to have a positive slope for the graphing of the score vs percentual price change, in this way there could be a level of correlation between the results from the score and how much the price would increase in the future.<br>
+Initially, an activity of spotting elements that could potentially tilt down the slope was done, for this task, the score was divided in the following way:<br>
+<br>
+<br>
+ <br>
+<br>
+For each of these 13 points a comparative graph was made and in the case the slope was negative then an analysis of the values assigned, their correlation and the percentual importance they had in the final score rearranged. In some situations, the slope stayed negative despite of the analysis of testing, in this case, more research was made into the specific point to analyse the reason for this. In only one situation this happened, in this case, it was for point K (operating margin), in the conditions for score an operating margin below 15% would initially show a bad financial situation, but after some research, in some situations, this margin is low since the companies work on the leverage of debt, this is intrinsic of certain companies and industries which require a different financial structure to that of average companies. despite of this, results above 15% showed an increasing score, this could be due to companies with an average model of business having a direct correlation between their income and their operating margin, for this reason only in the case of operating margin higher than 15% the score would be affected.<br>
+<br>
+Graphs of the 13 (final) tests made can be seen below:<br>
+<br>
+Please note the X-axis (column 1) represents the score value and the Y-axis (column 2) represent the percentual change in price over 2 years. column labels were kept for easier interpretation of processed data.<br>
+<br>
+<br>
+Technical indicators: positive slope<br>
+ <br>
+<br>
+Balance sheet: slight positive slope<br>
+<br>
+ <br>
+<br>
+Operating income: negative slope before 15%.<br>
+<br>
+ <br>
+<br>
+Comparison multiyear shareholder equity: slight positive slope<br>
+<br>
+ <br>
+<br>
+RSI: Negative slope<br>
+<br>
+<br>
+ <br>
+<br>
+<br>
+Ratio assets vs liabilities: positive slope <br>
+<br>
+<br>
+<br>
+<br>
+Financial statement: positive slope<br>
+ <br>
+MACD positive slope<br>
+ <br>
+<br>
+Full result<br>
+<br>
+ <br>
+<br>
+&bull; In the case of Shareholder Equity, all the values were the same since none of the stocks had a negative Shareholder Equity.<br>
+<br>
+&bull; In the case of the operative income and net income, the graph was not representative as the slope of the average line was 0 (flat line).<br>
+<br>
+Of course, this testing is not intending to point that positive slopes of all the elements tested will construct a positive slope as a result as, for example, companies with good macd scores could have bad rsi values, and vice versa. <br>
+<br>
+Conclusion on score testing<br>
+<br>
+although there is a clear tendency of linear relation between the percentual change in price and the score that companies have, the sample of data is considerable small to make any assumptions or conclusions, the score provided by impish gull might be a telling and useful factor for investment decisions, but it might as well not be.<br>
+<br>
+Testing LSTM<br>
+<br>
+The testing of the LSTM network predictor was not made in the same way as the score, this is mainly since methods of quantifying the success of the model are subjective and varied. For this reason, the testing was done through the graphical analysis of the price of a stock and the predicted obtained price, this method gives a glance of how the predictor tends to follow the price, but the predictions don&rsquo;t end up being as accurate. An example of the implementation can be seen below.<br>
+<br>
+ <br>
+Zoomed in<br>
+ <br>
+<br>
+It can be observed that the predicting line lags when intending to predict the price. In some situations, it could trigger a movement before the price moves, but this is not highly abundant, despite of this, the model was proven to work and respond to the information provided.<br>
+One of the issues of testing is the time it takes to train the data in order to make the predictions, this lowered considerably the possibilities of extensive testing.<br>
+In future work potential sophistication of this model and use of a higher amount of data could be applied in order to achieve higher levels of accuracy.<br>
+<br>
+Future Work<br>
+<br>
+Implementation with transformers<br>
+<br>
+Expansion of available assets<br>
+<br>
+The used API (alpha vantage) as mentioned before does not provide with information about all the public registered companies in the world, this could be added in the future.<br>
+<br>
+Improve graphics. <br>
+<br>
+Live search<br>
+For a more intuitive and more fluid user experience, a predictive life search could be added to show results based on the already typed characters. In this way, the user is not required to know the tickers of each stock they wish to search.<br>
+<br>
+Wider range of technical indicators<br>
+<br>
+As mentioned before, only 2 technical indicators of stocks were implemented, in the future, it could be an interesting thing to add more and different indicators such as volume and volatility.<br>
+<br>
+Social media tendency<br>
+<br>
+In today extremely digitalized and connected world, social tendency and social media platforms might play a big role in the movement of the price of certain assets, in this case, an analyser of the sentiment in social media platforms such a Twitter and Reddit could have a big beneficial impact on the information the user is feed with and which will shape investment decisions. APIS from Twitter and Reddit (2 of the main tendency declaring social media platforms) are available for free usage. Potential extension of the current impish gull software could be done with the addition of an HTML square declaring in a quantitative way how a specific ticker is perceived by these platforms sentiment.<br>
+<br>
+Data providers:<br>
+<br>
+Maybe use of different provider for data, especially if some requirements aren&rsquo;t me with alpha vantage or pay a subscription.<br>
+<br>
+Conclusion<br>
+<br>
+Achievements by impish gull<br>
+<br>
+Objectives of stock prediction and use of technical data to quantify potential success of companies was achieved with the use of alpha vantage API, a front-end interface, and a back-end implementation through the use of LSTM algorithms and financial indicators of momentum. Regardless of this, the results of testing are not conclusive or might imply that impish gull can be used as an investment tool since score does not have enough sample data to make an assumption of those characteristics and the graphical analysis of the results of the Lstm implementation didn&rsquo;t show signs of anticipated prediction of future price movements, but for the contrary lagged behind the actual price. <br>
+<br>
+Future of fintech<br>
+<br>
+It is really exciting to see what things could be don&rsquo;t what technology in relationship with finance in the future, perhaps new and more complicated methods and theories would arise that might imply things about the future of companies and their stock prices.<br>
+<br>
+Reflection on Learning<br>
+<br>
+Future of machine learning<br>
+Not trustable prediction<br>
+<br>
+&bull; Predictions made with Lstm did not meet any level of security, regardless of this not expectations of precision were set initially, for this reason, I do not believe that the full implementation of Lstm for prediction in this software could be of any help for investment decisions, regardless of this, this model with additions of filters and extra considerations for data could give relevant and considerable results that could shape decision.<br>
+<br>
+&bull; Finance is complex.<br>
+<br>
+Finance is extremely complex and subjective at times, this makes it complicated for software to be developed with the aim of prediction or accurately analysing finance, even if a really accurate model were to be developed this could be overshadowed by the mainstream use of this, which would ultimately end up making the model obsolete, regardless of this, this fintech environment is quite exciting and fast growing.<br>
+<br>
+<br>
+&bull; Learning of several digital tools was achieved through the development of this project:<br>
+<br>
+From web design and development,<br>
+To flask framework and interchange with back end, <br>
+And finally, back end with several elements and libraries of python that allowed me to extend and expand the depth of knowledge already present, including TensorFlow and Lstm, alpha vantage API request and management.<br>
+<br>
+&bull; Time management and interaction with supervisor<br>
+<br>
+A great amount of time management was learned through this project, including the fact of controlling my efforts and aims for a project that took months to develop. <br>
+<br>
+Glossary<br>
+<br>
+The following definitions were retrieved from Investopedia.com.<br>
+<br>
+Fat tails: statistical phenomenon exhibiting large leptokurtosis. This represents a greater likelihood of extreme events occurring.<br>
+<br>
+Leverage: the use of debt (borrowed capital) in order to undertake an investment or project.<br>
+<br>
+Ticker: report of the price of certain securities.<br>
+<br>
+Momentum of price: rate of acceleration of a security's price.<br>
+<br>
+Operative income: accounting figure that measures the amount of profit realized from a business's operations, after deducting operating expenses such as wages.<br>
+<br>
+Net income: also called net earnings, is calculated as sales minus cost of goods sold, selling, general and administrative expenses, operating expenses, depreciation, interest, taxes, and other expenses. Net income is a measurement of a company profitability.<br>
+<br>
+Operation margin: how much profit a company makes on a dollar of sales after paying for variable costs of production, such as wages.<br>
+<br>
+Revenue: income generated from normal business operations and includes discounts and deductions for returned merchandise.<br>
+<br>
+Total shareholder equity: The corporation's owners' residual claim on assets after debts have been paid.<br>
+<br>
+Current assets: represent all the assets of a company that are expected to be conveniently sold, consumed, used, or exhausted through standard business operations with one year.<br>
+<br>
+Current liabilities: a company's short-term financial obligations that are due within one year or within a normal operating cycle<br>
+<br>
+Table of Abbreviations<br>
+<br>
+API: Application Programming Interface<br>
+CSS: Cascading Style Sheets Cascading<br>
+Etf: Exchange Traded Fund<br>
+Fx: Forex<br>
+Html: Hypertext Markup Language<br>
+Lstm: Long Sort term memory<br>
+Macd: Moving average convergence divergence.<br>
+NASDAQ: National Association of Securities Dealers Automated Quotations<br>
+NYSE: New York Stock Exchange<br>
+OBV: On-balance volume<br>
+Rsi: Relative Strength index<br>
+RNN: recurrent neural networks<br>
+S&amp;P 500: Standard and Poor's 500<br>
+<br>
+References<br>
+<br>
+Macd<br>
+https://www.investopedia.com/terms/m/macd.asp<br>
+https://school.stockcharts.com/doku.php?id=technical_indicators:macd-histogram#:~:text=The%20MACD%2DHistogram%20is%20an%20indicator%20designed%20to%20predict%20signal,most%20frequent%20of%20MACD%20signals.<br>
+https://www.investopedia.com/articles/forex/05/macddiverge.asp<br>
+Rsi<br>
+https://www.investopedia.com/terms/r/rsi.asp<br>
+Any other technical indicator<br>
+Selection of technical indicators<br>
+https://www.investopedia.com/top-7-technical-analysis-tools-4773275<br>
+Balance sheet<br>
+https://www.youtube.com/watch?v=7THNE8xEcHk&amp;ab_channel=DanielPronk<br>
+https://www.investopedia.com/terms/b/balancesheet.asp#:~:text=Key%20Takeaways-,A%20balance%20sheet%20is%20a%20financial%20statement%20that%20reports%20a,used%20to%20evaluate%20a%20business.<br>
+Income statement<br>
+https://www.youtube.com/watch?v=uVHGgSXtQmE&amp;ab_channel=DanielPronk<br>
+https://www.investopedia.com/terms/i/incomestatement.asp<br>
+Lstm<br>
+https://www.youtube.com/watch?v=PuZY9q-aKLw&amp;ab_channel=NeuralNine<br>
+Alpha vantage<br>
+https://www.alphavantage.co/<br>
+https://www.alphavantage.co/documentation/<br>
+Source of video<br>
+Search bar<br>
+Side nav<br>
+Selection of API<br>
+https://medium.com/@patrick.collins_58673/stock-api-landscape-5c6e054ee631<br>
+https://towardsdatascience.com/best-5-free-stock-market-apis-in-2019-ad91dddec984<br>
+https://towardsdatascience.com/best-free-and-paid-stock-market-apis-for-2020-11adb98e7023<br>
+https://www.abstractapi.com/guides/best-stock-apis<br>
+Other APIs<br>
+https://polygon.io/<br>
+https://iexcloud.io/<br>
+Use of alpha vantage.<br>
+Python<br>
+Html<br>
+Error handling<br>
+Date finding<br>
+Source or article at the beginning<br>
+Source of tesla<br>
+Source of crypto<br>
+Trading 212<br>
+https://www.trading212.com/<br>
+Any other problematic motivational<br>
+Source of other similar predictors that aren&rsquo;t as good or are expensive<br>
+Transformers<br>
+http://cs230.stanford.edu/projects_winter_2020/reports/32066186.pdf<br>
+Rnn<br>
+Graphing <br>
+https://scatterplot.online/<br>
+operating margin<br>
+https://www.fool.com/the-blueprint/operating-margin/#:~:text=A%20higher%20operating%20margin%20indicates%20that%20the%20company%20is%20earning,than%2015%25%20is%20considered%20good.&amp;text=2019%20operating%20margin%20%3D%20%240.30%2C%20or%2030%25%20margin<br>
+
+	<br><br>
+	<br><br>	
+
+	</p2>
+
+{% endblock content %}

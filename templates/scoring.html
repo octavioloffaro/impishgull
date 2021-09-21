@@ -1,0 +1,176 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1><center><img border=0 src="{{ url_for('static', filename='img/logo.png') }}" alt="name" width="200" /></center></h1>
+<br><br>
+<br><br>
+    <center><h1>Understanding score</h1></center>
+<br><br>
+	 
+	
+<p>Score</p>
+
+<p>How does score work</p>
+
+<p>The stock score works by quantifying over 13 points from the company searched, these points cover the following topics and areas of a company: Momentum of price, operative income, net income, operation margin, revenue, total shareholder equity, current assets and current liabilities (please refer to the final glossary for specific definitions of these), these selections of elements was concluded after research about indications of healthy financial condition of a company or potential future growth. Ultimately the score gives a specific number that intends to quantify the health of the finances of the company in consideration. Variation on contributions to the final score varies depending on the point in consideration following the following chart:</p>
+
+<p>  Here, it can be noted that values obtained from the balance sheet and income statement have more relative weight, since these reflect the real and indisputable condition of the finances of the company. On the other hand, the technical indicators have less weight because these are highly volatile elements, in addition, their accuracy is not always precise and the way they are read can vary widely. Other hierarchical considerations are the following:</p>
+
+<p>&bull; Balance sheet is more relevant than income statement since it represents more long term and stability-indicating factors.</p>
+
+<p>&bull; MACD is more relevant than rsi since the amount of positive and negative incidence triggers on macd are much rarer than RSI.</p>
+
+<p>Different technical indicators</p>
+
+<p>Selection of technical indicators</p>
+
+<p>The selection of technical indicators was made following higher usage registered by the alpha vantage API, despite of this more indicators were intended to be implemented to get a more general and telling result but the time given for this project did not allow for this addition, in the future more technical indicators could be added into the software.</p>
+
+<p>RSI</p>
+
+<p>Rsi or Relative Strength Index is a momentum indicator that measures the relevance of prices changes in a stock price in order to indicate if the asset is overbought or oversold.</p>
+
+<p>The interpretation of rsi is performed through the values of 70 and 30, 70 or higher represents an overbought asset, 30 or lower the opposite, these numbers are of course mathematically progressive, but despite of this, these are emotional and computational triggers, for this reason on impish gull the weight of rsi values is affected highly by these 2 numbers.</p>
+
+<p>In the following graph, it can be appreciated</p>
+
+<p>Implementation on score</p>
+
+<p>The implementation on the programs consists of a trigger that considers the following:</p>
+
+<p> if rsi>70:  score=score+7  elif rsi<30:  score=score-7  elif 50<rsi<70:  score=score+5  elif 30<rsi<=50:  score=score-3</p>
+
+<p> MACD</p>
+
+<p>MACD (Moving Average Convergence Divergence) is a trend following indicator that indicates the momentum of a given stock, in this way we can deduct the tendency of movement of a price and if the strength of increase and decrease of price is accentuated or reduced.</p>
+
+<p>The interpretation of this technical indicator is done by observing the signal line and the macd line, if both lines converge or have a converging tendency this could be a signal of price change. In the case the macd line crosses the signal line in an uptrend tendency then this can be taken as a signal of potential increase in price, and if it crosses the signal line in a descending tendency then the price has lost momentum and can be interpreted as a future lower price. If both lines approach each other in a manner following the above reference, then it can also be assumed that the price might increase or decrease.</p>
+
+<p></p>
+
+<p></p>
+
+<p> Implementation</p>
+
+<p>The implementation of macd in the score follows the following conditional statements having in consideration:</p>
+
+<p>L1= MACD LINE. L2= SIGNAL LINE. L1-1=MACD LINE OF ONE MONTH IN THE PAST. L2-1=SIGNAL LINE OF ONE MONTH IN THE PAST L1/L2= Either L1 or L2 (L1/L2)-1=Either L1-1 or L2-1</p>
+
+<p>(The following graphical representations of conditional statements are used for easier interpretation)</p>
+
+<p></p>
+
+<p></p>
+
+<p> (L1-1)-(L2-1)=L1-L2</p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p>   (L1-1)>(L2-1) &amp; L2>L1  </p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p> L1>L2 &amp; (L1-1)-(L2-1)>L1-L2</p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p>L1<L2 &amp; (L1-1)-(L2-1)<L1-L2</p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p> </p>
+
+<p>  (L2-1)>(L1-1) &amp; L1>L2</p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p> L2>L1 &amp; (L2-1)-(L1-1)>L2-L1</p>
+
+<p></p>
+
+<p></p>
+
+<p></p>
+
+<p>  L2<L1 &amp; (L2-1)-(L1-1)<L2-L1</p>
+
+<p></p>
+
+<p></p>
+
+<p>Specific scoring of the above represented conditional statements can be seen in the following piece of code:</p>
+
+<p> if (macd1-signalline1)==(macd-signalline):  score=score  elif (macd > signalline):  if(macd1-signalline1)>(macd-signalline):  score=score-9  if(macd1-signalline1)<(macd-signalline):  score=score+9  if macd1<signalline1:  score= score+10  elif (macd<signalline):  if (signalline1-macd1)<(signalline-macd):  score=score+9  if (signalline1-macd1)>(signalline-macd):  score=score-9  if macd1>signalline1:  score= score-10</p>
+
+<p>Financial Statements</p>
+
+<p>In contrast to technical indicators, financial statements are not graph-based, these are several numbers and documents released by the company to the public in which information about all the insides of the finances of the company are described and quantified. For the purpose of this software 2 of the main financial statements were used: balance sheet and income statement, both will be explained in detail in the following paragraphs. Please note another relevant and important source of information document is normally used by investors (cash flow) but for time reasons it was decided to be skipped; this could be a good addition for future versions.</p>
+
+<p>Balance Sheet</p>
+
+<p>Balance sheet is a financial statement that reports a company assets and liabilities at any specific pointy in time, several sub elements can be deducted from it.</p>
+
+<p>Implementation in score</p>
+
+<p>3 points of consideration are made in the contribution of the balance sheet to the score, these points are the following:</p>
+
+<p>Total shareholder equity: this represents &#8230;&#8230;..</p>
+
+<p>if the total shareholder equity perceived by the company for the year is positive this will incur an increase in score, on the other hand, if the company&rsquo;s equity is negative the score will lower.</p>
+
+<p>If the total shareholder equity of the year before (year-1) is lower than the total shareholder equity of the current year, which would ultimately represent an increase in the amount of money entering in the business, this would incur an increased score and vice versa in the case the total shareholder equity is higher</p>
+
+<p>In the case that the ratio between the current assets and the total current liabilities is higher than 1 ( TCA/TCL>1) the score would increase, and vice versa if its smaller than 1. This would help the score to interpret if the company is currently having more assets than liabilities.</p>
+
+<p>Specific scoring can be seen in the following piece of code:</p>
+
+<p>  if ShareholderEquity>0.0:  score=score+11  else:  score-30  if ShareholderEquity1<ShareholderEquity:  score=score+11  else:  score=score-20  if (totalcassets/totalcliabilities)<1.0:  score=score-26  elif (totalcassets/totalcliabilities)>1.0:  score=score+12  elif (totalcassets/totalcliabilities)>2.0:  score=score+22  elif (totalcassets/totalcliabilities)>3.0:  score=score+32  elif (totalcassets/totalcliabilities)>4.0:  score=score+36</p>
+
+<p></p>
+
+<p>Income Statement</p>
+
+<p>Income statement is a financial statement that reports a company financial performance over a specific period.</p>
+
+<p>4 points of consideration are used to shape the score:</p>
+
+<p>&bull; if operation margin, which is the result of the division of operating income over the revenue (OI/R), is bigger than 15% the score would rise as this is an average drawn from how well a business has performed. In the case it's lower than 15% then the score would get smaller.</p>
+
+<p>&bull; If the operative income is positive, then this will incur an increase of score since this shows that the business and its operations are obtaining more income than perceiving lost.</p>
+
+<p>&bull; If the net income is positive, demonstrating that the company is making money instead of losing it then the score would increase and vice versa.</p>
+
+<p>&bull; In case the revenue increases but the operation income decreases the score would be reduced, this is due to the fact that despite of the company growing, the income associated with operations (work) are decreasing, showing in this way a less efficient business despite of the increase of money entering the company.</p>
+
+<p>Specific scoring can be seen in the following piece of code:</p>
+
+<p> if 15<((operatingincome/totalrevenue)*100)<=20:  score=score+5  elif ((operatingincome/totalrevenue)*100)>20:  score=score+7  if operatingincome>0:  score=score+9  else:  score=score-15</p>
+	<br><br>
+	<br><br>	
+
+	</p2>
+
+{% endblock content %}

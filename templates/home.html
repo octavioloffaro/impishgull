@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block content %}
+<body>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<div class="wrap">	
+		<div class="search">
+			<form action="#" method="post">
+
+				<input style="display:inline-block;position: absolute;   right: 40px; font-size: 18px; z-index: 111 " type="text" name="nm" placeholder="Search Stock ticker"/>
+
+				<button style="display:inline-block;position: absolute;   right: 0px; font-size: 18px; z-index: 111 "; type="submit"><i class="fa fa-search"></i></button>
+
+			</form>
+		</div>
+	</div>
+</body>
+
+<h1><center><img border=0 src="{{ url_for('static', filename='img/logo.png') }}" alt="name" width="200" /></center></h1>
+
+
+<br>
+
+{% if prediction1 > 0.0 %}
+	<p2 style="padding: 10px;  width: 1000px;margin-left:235px; height: 150px; font-size: 80px" >{{ title }} ({{ symbol }})</p2>
+	{% if prediction1 > currentprice %}
+		<p2 style="padding: 10px; color: white; background-color: green; width: 210px; height: 210px; font-size: 35px; display:inline-block;left: 400px;position: absolute">Price expected for next close: ${{ "%.2f" % prediction1 }}</p2>
+		<p2 style="padding: 10px; color: white; background-color: #DC143C; width: 210px; height: 210px; font-size: 35px; display:inline-block;left:  35px;position: absolute">Last closing Price: ${{ "%.2f" % currentprice }}</p2>
+	{% elif prediction1 < currentprice %}
+		<p2 style="padding: 10px; color: white; background-color: #DC143C;  width: 210px; height: 210px; font-size: 35px; display:inline-block;left: 400px;position: absolute">Price expected for next close: ${{ "%.2f" % prediction1 }}</p2>
+		<p2 style="padding: 10px; color: white; background-color: green; width: 210px; height: 210px; font-size: 35px;display:inline-block;left: 35px;position: absolute">Last closing Price: ${{ "%.2f" % currentprice }}</p2>
+	{% else %}
+		<p2 style="padding: 10px; color: white; background-color: grey ; width: 210px; height: 210px; font-size: 35px; display:inline-block;left: 400px;position: absolute">Price expected for next close: ${{ "%.2f" % prediction1 }}</p2>
+		<p2 style="padding: 10px; color: white; background-color: grey ; width: 210px; height: 210px; font-size: 35px;display:inline-block;left: 35px;position: absolute">Last closing Price: ${{ "%.2f" % currentprice }}</p2>
+	{% endif %}  
+	{% if rsi != 11111 %}
+		<p2 style="padding: 10px; color: white; background-color: blue; width: 210px; height: 210px; font-size: 35px; display:inline-block;left: 750px;position: absolute">Super indicator score: {{ rsi }}</p2>
+	{% else %}
+		<p2 style="padding: 10px; color: white; background-color: blue; width: 210px; height: 210px; font-size: 35px; display:inline-block;left: 750px;position: absolute">Super indicator score: Not Avaliable</p2>
+	{% endif %}
+{% else %}
+	
+	<h1><center><img border=0 src="{{ url_for('static', filename='img/back.png') }}" alt="name" width="1200" /></center></h1>
+	
+{% endif %} 
+  
+
+{% endblock content %}
+

@@ -1,0 +1,416 @@
+
+body {
+  font-family:helvetica, sans-serif;
+  background-color: #fff7fe;
+  color:white;
+  
+  
+}
+
+.background-wrap {
+	
+	height: 100%;
+	z-index: -1000;
+	overflow: hidden;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+			
+#video-bg-elem {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-height: 100%;
+	min-width: 100%;
+}
+
+.sidenav {
+	height: 100%;
+	width: 0;
+	background-color: #111;
+	position: fixed;
+	transition: 0.6s;
+	z-index: 10000;
+	top: 0;
+	left: 0;
+	overflow-x: hidden;
+	padding-top: 60px;
+}
+
+.sidenav a {
+	padding: 8px 8px 8px 33px;
+	transition: 0.3s;
+	font-size: 26px;
+	color: #818181;
+	display: block;
+	
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+	color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	right: 1px;
+	font-size: 36px;
+	margin-left: 50px;
+	
+}
+
+@media screen and (max-height: 455px) {
+	.sidenav a {font-size: 18px;}
+	.sidenav {padding-top: 17px;}
+	
+}
+
+.button {
+  background-color: #3090C7;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.button1 {
+  background-color: #3090C7;
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  margin: 0px 0px;
+  cursor: pointer;
+}
+
+h1 {
+  padding-left: 20px;
+  font-family:sans-serif;
+  color:white;
+  
+  
+}
+
+
+p2 /*general paragraph*/
+{
+	position: float;
+    padding-left: 5px;
+	margin-left: 16%;
+	margin-right: 16%;
+	font-size: 18px;
+	letter-spacing: 1px;     
+	color: white;
+	display: block;
+	white-space: 5px;
+	z-index: 0;
+	text-align: left;
+	
+	
+	
+}
+
+a {
+  text-decoration:none;
+  color:white;
+  
+}
+
+a:hover {
+  
+  color:#0cc3300;
+}
+
+#header {
+    padding:10px 100px;
+    font-size:18px;
+    overflow:auto;
+    background-color: #ffffe6;
+}
+
+.cont /*semitransparent wallpaper*/
+{
+	position: fixed;
+	z-index: -999;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.6);
+}
+
+p1{
+	color:white;
+}
+
+.login-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background-color: rgba(0,0,0,0);
+  color: white;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.login-container button:hover {
+  background-color: rgba(0,0,0,0.6);
+}
+h3{
+	color:white;
+}
+figure {
+	text-align: left;
+  float: left;
+ resize: none;
+  text-align: center;
+  font-style: italic;
+  font-size: smaller;
+  text-indent: 0;
+  margin: 0.5em;
+  padding: 5em;
+}
+p{
+	color:white;
+}
+td{
+	color:white;
+}
+
+
+
+
+
+.is-visible { opacity: 1;    }
+.is-hidden {  opacity: 0;    }
+.is-removed { display: none; }
+
+
+
+#message {
+  margin: 0 auto;
+  width: 81%;
+  padding: 12px;
+  background-color: #343434;
+  margin-top: 20px;
+  .rounded(13px);
+  .transition(1s);
+  color: white;
+}
+.rounded(@radius: 3px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+.transition(@duration:0.3s, @ease:ease-out) {
+  -webkit-transition: all @duration @ease;
+  -moz-transition: all @duration @ease;
+  -o-transition: all @duration @ease;
+  transition: all @duration @ease;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  position: absolute;
+  right: 100px;
+  padding-bottom: 100px;
+}
+
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding-left: 36px;
+  padding-right: 36px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  
+  position: absolute;
+  top:0px;
+  right:10px;
+  
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  right:10px;
+  top: 70px;
+  
+}
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+
+
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+input {
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: black;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    appearance: auto;
+    background-color: white;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    padding: 1px 2px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: gray;
+    border-image: initial;
+}
+
+button[type="submit"] {
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+button:hover {
+  background: #0b7dda;
+}
+
+input[type="text"] {
+  width: 100%;
+  border: 3px solid #00B4CC;
+  border-right: none;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+input:hover {
+  border-color: #0b7dda;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.wrap{
+  width: 20%;
+  position: absolute;
+  top: 3%;
+  right: 5%;
+
+}
+
+element.style {
+    display: none;
+}
+.ui-widget.ui-widget-content {
+    border: 1px solid #c5c5c5;
+}
+.ui-widget-content {
+    border: 1px solid #dddddd;
+    background: #ffffff;
+    color: #333333;
+}
+.ui-widget {
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 1em;
+}
+.ui-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+    outline: 0;
+}
+.ui-autocomplete {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: default;
+}
+.ui-front {
+    z-index: 100;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+.ui-helper-hidden-accessible {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+
+div {
+    display: block;
+}
+
+p45{
+	background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
