@@ -13,7 +13,8 @@ colorama==0.4.4
 cycler==0.10.0
 DateTime==4.3
 Flask==2.0.1
-flatbuffers==1.12
+flatbuffers==1.12.
+flask_sqlalchemy==2.4.1
 gast==0.4.0
 google-auth==1.34.0
 google-auth-oauthlib==0.4.5
