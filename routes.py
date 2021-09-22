@@ -1,6 +1,6 @@
 import os
 from flask import render_template, url_for, request, redirect, flash, session, Flask, Response, Blueprint
-from impishgull import app
+import app
 import pandas as pd
 import matplotlib.pyplot as plt
 from pprint import pprint
@@ -15,7 +15,7 @@ from wtforms import TextField, Form
 from alpha_vantage.timeseries import TimeSeries
 from alpha_vantage.techindicators import TechIndicators
 from jinja2 import TemplateNotFound
-from impishgull.api_call import get_values
+from .api_call import get_values
 import datetime
 import requests
 
