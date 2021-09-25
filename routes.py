@@ -1,6 +1,6 @@
 import os
 from flask import render_template, url_for, request, redirect, flash, session, Flask, Response, Blueprint
-import app
+from software import app
 import pandas as pd
 import matplotlib.pyplot as plt
 from pprint import pprint
@@ -15,7 +15,7 @@ from wtforms import TextField, Form
 from alpha_vantage.timeseries import TimeSeries
 from alpha_vantage.techindicators import TechIndicators
 from jinja2 import TemplateNotFound
-from .api_call import get_values
+from software.api_call import get_values
 import datetime
 import requests
 
@@ -82,7 +82,7 @@ def home():
                     thisXMasDayAsString = "Friday"
                     todayprice=todayprice-d
 
-                todaypricee = web.DataReader(company, 'av-daily', todayprice-d1*3, api_key='0SWK3900UOOOSR7N')
+                todaypricee = web.DataReader(company, 'av-daily', todayprice-d, api_key='0SWK3900UOOOSR7N')
                 todaypricee1 = web.DataReader(company, 'av-daily', todayprice1+d1, api_key='0SWK3900UOOOSR7N')
                 #
 

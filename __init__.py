@@ -4,5 +4,5 @@ from flask_login import LoginManager
 
 app = Flask(__name__)
 
-import routes
-import errorhandler
+from software import routes
+from software import errorhandler
